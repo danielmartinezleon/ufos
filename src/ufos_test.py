@@ -27,8 +27,28 @@ formas_por_mes = indexa_formas_por_mes(avistamientos)
 for mes, formas in formas_por_mes.items():
     print(f"{mes}: {formas}")
 
+from datetime import date
+
+# Test de la función avistamientos_fechas
+fecha_inicial = date(2005, 5, 1)
+fecha_final = date(2005, 6, 1)
+
+avistamientos_rango = avistamientos_fechas(avistamientos, fecha_inicial, fecha_final)
+
+print(f"Mostrando los avistamientos entre el {fecha_inicial} y el {fecha_final}:")
+for avistamiento in avistamientos_rango:
+    print(avistamiento)
+
+
 
 # Test de la función hora_mas_avistamientos
+hora_mas_frecuente = hora_mas_avistamientos(avistamientos)
+
+# Test de la función dicc_estado_longitud_media_comentario
+longitud_media_comentarios = dicc_estado_longitud_media_comentario(avistamientos)
+for estado, media in longitud_media_comentarios.items():
+    print(f" {estado}:, {media:.2f}")
+
 
 
 

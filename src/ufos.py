@@ -66,3 +66,58 @@ def indexa_formas_por_mes(registros):
         formas_por_mes[nombre_mes].add(avistamiento.forma)
 
     return formas_por_mes
+
+def avistamientos_fechas(registros, fecha_inicial=None, fecha_final=None):
+
+    if fecha_inicial is None and fecha_final is None:
+        registros_filtrados = registros
+    else:
+        registros_filtrados = []
+        for avistamiento in registros:
+            fecha_avistamiento = avistamiento.fecha
+
+            if fecha_inicial and fecha_final:
+                if fecha_inicial <= fecha_avistamiento <= fecha_final:
+                    registros_filtrados.append(avistamiento)
+            elif fecha_inicial:
+                if fecha_avistamiento >= fecha_inicial:
+                    registros_filtrados.append(avistamiento)
+            elif fecha_final:
+                if fecha_avistamiento <= fecha_final:
+                    registros_filtrados.append(avistamiento)
+
+    registros_filtrados.sort(key=lambda x: x.fecha, reverse=True)
+
+    return registros_filtrados
+
+def hora_mas_avistamientos(registros):
+    contador_horas = {hora: 0 for hora in range(24)}
+
+    for avistamiento in registros:
+        hora = avistamiento.hora.hour
+        contador_horas[hora] += 1
+
+    hora_mas_frecuente = max(contador_horas, key=contador_horas.get)
+
+    print(f"Hora en la que se han observado más avistamientos: {hora_mas_frecuente}")
+    return hora_mas_frecuente
+
+def dicc_estado_longitud_media_comentario(registros):
+    suma_longitudes = {}
+    contador_avistamientos = {}
+
+    for avistamiento in registros:
+        estado = avistamiento.estado
+        longitud_comentario = len(avistamiento.descripcion)
+
+        if estado not in suma_longitudes:
+            suma_longitudes[estado] = 0
+            contador_avistamientos[estado] = 0
+
+        suma_longitudes[estado] += longitud_comentario
+        contador_avistamientos[estado] += 1
+
+    longitud_media_por_estado = {estado: suma_longitudes[estado] / contador_avistamientos[estado]
+                                 for estado in suma_longitudes}
+
+    return longitud_media_por_estado
