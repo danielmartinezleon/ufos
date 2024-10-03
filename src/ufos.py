@@ -1,7 +1,9 @@
 from datetime import datetime
 from collections import namedtuple
 import csv
+import json
 
+# Ejercicio 1
 def lee_avistamientos(fichero):
     Avistamiento = namedtuple('Avistamiento', 'fecha, hora, lugar, estado, forma, duracion, descripcion, latitud, longitud')
     avistamientos = []
@@ -31,6 +33,7 @@ def lee_avistamientos(fichero):
 
     return avistamientos_ordenados
 
+# Ejercicio 2
 def duracion_total(registros, estado):
     duracion_total = 0
     for avistamiento in registros:
@@ -39,6 +42,7 @@ def duracion_total(registros, estado):
     print(f"Duración total de los avistamientos en {estado}: {duracion_total} segundos.")
     return duracion_total
 
+# Ejercicio 3
 def comentario_mas_largo(registros, anyo, palabra):
     avistamientos_filtrados = [
         avistamiento for avistamiento in registros
@@ -54,7 +58,7 @@ def comentario_mas_largo(registros, anyo, palabra):
 
     return avistamiento_con_comentario_mas_largo
 
-
+# Ejercicio 4
 def indexa_formas_por_mes(registros):
     nombres_meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
                      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
@@ -67,6 +71,7 @@ def indexa_formas_por_mes(registros):
 
     return formas_por_mes
 
+# Ejercicio 5
 def avistamientos_fechas(registros, fecha_inicial=None, fecha_final=None):
 
     if fecha_inicial is None and fecha_final is None:
@@ -90,6 +95,7 @@ def avistamientos_fechas(registros, fecha_inicial=None, fecha_final=None):
 
     return registros_filtrados
 
+# Ejercicio 6
 def hora_mas_avistamientos(registros):
     contador_horas = {hora: 0 for hora in range(24)}
 
@@ -102,6 +108,7 @@ def hora_mas_avistamientos(registros):
     print(f"Hora en la que se han observado más avistamientos: {hora_mas_frecuente}")
     return hora_mas_frecuente
 
+# Ejercicio 7
 def dicc_estado_longitud_media_comentario(registros):
     suma_longitudes = {}
     contador_avistamientos = {}
@@ -121,3 +128,8 @@ def dicc_estado_longitud_media_comentario(registros):
                                  for estado in suma_longitudes}
 
     return longitud_media_por_estado
+
+
+def generar_json(registros, fichero_salida):
+    with open(fichero_salida, 'w', encoding='utf-8') as jsonfile:
+        json.dump(registros, jsonfile)
